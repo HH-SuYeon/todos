@@ -38,18 +38,17 @@ export default function App() {
     if (chdate) setDate(chdate)
   }
 
-
   return (
     <View style={styles.container}>
 
       <Text style={styles.title}>Todo List 📋</Text>
 
-      {/* 날짜를 제목 바로 아래로 배치 */}
+      {/* 날짜 - 제목 바로 아래 */}
       <Pressable onPress={() => setShowPicker(true)} style={styles.dateLine}>
         <Text style={styles.dateText}>{formatDate(date)}</Text>
       </Pressable>
 
-      {/* 입력창 + 추가버튼 */}
+      {/* 입력창 + 버튼 */}
       <View style={styles.inputRow}>
         <TextInput
           style={styles.input}
@@ -95,7 +94,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 50,
-    alignItems: 'center',      // 전체 가운데 정렬
+    alignItems: 'center',
     backgroundColor: 'lightpink',
   },
   title: { fontSize: 40, marginBottom: 10 },
@@ -108,19 +107,22 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   input: {
-    width: 200,                 // 더 넓게 수정
+    width: 200,
     height: 35,
     borderWidth: 1,
-    borderColor: 'gray',
+    borderColor: "gray",      // 🔥 문자열로 정상 처리
     paddingHorizontal: 10,
     borderRadius: 8,
     marginRight: 10
   },
   addbtn: {
-    backgroundColor: 'black',
+    backgroundColor: "black", // 🔥 문자열 처리
     paddingHorizontal: 15,
     justifyContent: 'center',
     borderRadius: 8
   },
-  addtext: { color: 'white', fontSize: 18 }
+  addtext: {
+    color: "white",           // 🔥 문자열 처리
+    fontSize: 18
+  }
 })
