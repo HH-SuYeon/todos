@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import {
   StyleSheet, Text, View, TextInput,
-  Platform, FlatList, Pressable,
-} from 'react-native';
+  Platform, FlatList, Pressable
+} from 'react-native'
 import DateTimePicker from '@react-native-community/datetimepicker'
 
 export default function App() {
@@ -19,8 +19,7 @@ export default function App() {
   }
 
   const addTodo = () => {
-    if (!text.trim()) return
-
+    if (!text.trim()) return;
     const newTodo = {
       id: Date.now().toString(),
       title: text.trim(),
@@ -31,7 +30,7 @@ export default function App() {
   }
 
   const removeTodo = (id) => {
-    setTodos(todos.filter((item) => item.id !== id))
+    setTodos(todos.filter(item => item.id !== id))
   }
 
   const changeDate = (e, chdate) => {
@@ -42,17 +41,18 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+
       <Text style={styles.title}>Todo List 📋</Text>
 
-      {/* 🔥 날짜 위치를 TODO 리스트 제목 바로 아래로 이동 */}
-      <Pressable onPress={() => setShowPicker(true)} style={styles.dateWrap}>
+      {/* 날짜를 제목 바로 아래로 배치 */}
+      <Pressable onPress={() => setShowPicker(true)} style={styles.dateLine}>
         <Text style={styles.dateText}>{formatDate(date)}</Text>
       </Pressable>
 
-      {/* 입력창 + 버튼 */}
-      <View style={styles.inputR}>
+      {/* 입력창 + 추가버튼 */}
+      <View style={styles.inputRow}>
         <TextInput
-          style={styles.in}
+          style={styles.input}
           placeholder='할 일 입력 · · ·'
           value={text}
           onChangeText={setText}
@@ -65,7 +65,7 @@ export default function App() {
       {showPicker && (
         <DateTimePicker
           value={date}
-          mode="date"
+          mode='date'
           display={Platform.OS === 'ios' ? 'spinner' : 'default'}
           onChange={changeDate}
         />
@@ -75,66 +75,52 @@ export default function App() {
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id}
-        ListEmptyComponent={<Text>할일이 없어요</Text>}
+        ListEmptyComponent={<Text style={{ marginTop: 10 }}>할일이 없어요</Text>}
         renderItem={({ item, idx }) => (
           <Pressable onLongPress={() => removeTodo(item.id)}>
             <Text>{idx}</Text>
             <Text>{item.title}</Text>
             <Text>{item.date}</Text>
-            <Text> 길게 눌러서 삭제</Text>
+            <Text> (길게 눌러서 삭제)</Text>
           </Pressable>
         )}
       />
+
     </View>
-  );
+  )
 }
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 40,
-    alignItems: 'center',
+    paddingTop: 50,
+    alignItems: 'center',      // 전체 가운데 정렬
     backgroundColor: 'lightpink',
   },
-  title: {
-    fontSize: 50,
-    marginBottom: 10,
-  },
+  title: { fontSize: 40, marginBottom: 10 },
 
-  /* 🔥 날짜를 한 줄로 가운데 정렬되도록 스타일만 추가 */
-  dateWrap: {
-    marginBottom: 15,
-  },
-  dateText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: darkgray,
-  },
+  dateLine: { marginBottom: 15 },
+  dateText: { fontSize: 18, fontWeight: 'bold' },
 
-  inputR: {
+  inputRow: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 20
   },
-  in: {
-    width: 180,  /* 기존보다 조금 넓힘 */
-    height: 30,
+  input: {
+    width: 200,                 // 더 넓게 수정
+    height: 35,
     borderWidth: 1,
-    borderColor: "lightGray",
-    padding: 12,
-    borderRadius: 10,
-    marginRight: 10,
+    borderColor: 'gray',
+    paddingHorizontal: 10,
+    borderRadius: 8,
+    marginRight: 10
   },
   addbtn: {
-    width: 60,
-    height: 30,
-    backgroundColor: "black",
-    color: "white",
+    backgroundColor: 'black',
+    paddingHorizontal: 15,
     justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 7,
+    borderRadius: 8
   },
-  addtext: {
-    fontSize: 20,
-    color: 'white',
-  }
-});
+  addtext: { color: 'white', fontSize: 18 }
+})
